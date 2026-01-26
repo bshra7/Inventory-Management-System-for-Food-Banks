@@ -10,6 +10,9 @@ thus undermining the purpose of a food bank despite the availability of sufficie
 - To ensure that food banks across the province can share their surplus with neighbouring food banks using an inventory management system to track surplus in goods
 - Improve inter bank communication, by centralizing communication in one consice platform, insread of the traditional ways such as emials, phone calls, etc which usually casue miscommunication and long delays
 
-Authors:
-Shivam Jigneshbhai Soni <a id='https://github.com/ShivStrider'></a>
+# <h1> **Authors:** </h1>
+<a href="https://github.com/ShivStrider">Shivam Jigneshbhai Soni</a>
+<a href="https://github.com/bshra7">Bushra Alkhateeb</a>
+
+
  
