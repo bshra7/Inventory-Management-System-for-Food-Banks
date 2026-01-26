@@ -12,6 +12,7 @@ thus undermining the purpose of a food bank despite the availability of sufficie
 
 # <h1> **Authors:** </h1>
 <a href="https://github.com/ShivStrider">Shivam Jigneshbhai Soni</a>
+<br />
 <a href="https://github.com/bshra7">Bushra Alkhateeb</a>
 
 
