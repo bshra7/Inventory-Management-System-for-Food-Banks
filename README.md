@@ -5,3 +5,7 @@ Some places have a surplus number of certain foods while the others lack the sam
 These problems lead to increased food wastage and food not reaching its target, 
 thus undermining the purpose of a food bank despite the availability of sufficient food. Our project focus is to solve this problem, by creating a common platform (hub) in which different banks can share their inventory information and food requirements to fulfill the needs of the community thereby reducing food wastage. 
 
+# <h1> **Project Goal:** </h1>
+- To reduce food waste, by prioritzing items nearing expiration
+- To ensure that food banks across the province can share their surplus with neighbouring food banks using an inventory management system to track surplus in goods
+- Improve inter bank communication, by centralizing communication in one consice platform, insread of the traditional ways such as emials, phone calls, etc which usually casue miscommunication and long delays
