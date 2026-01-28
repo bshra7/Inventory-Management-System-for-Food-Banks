@@ -14,6 +14,15 @@ thus undermining the purpose of a food bank despite the availability of sufficie
 <a href="https://github.com/ShivStrider">Shivam Jigneshbhai Soni</a>
 <br />
 <a href="https://github.com/bshra7">Bushra Alkhateeb</a>
+<bre/>
+<a href="https://github.com/ethos747">Ethan Behl</a>
+<bre/>
+<a href="https://github.com/needhamthomas23">Thomas Needham</a>
+<bre/>
+<a href="http://github.com/Ishan1535">Ishan Kumar</a>
+
+
+
 
 
  
