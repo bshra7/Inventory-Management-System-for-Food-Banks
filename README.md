@@ -1,5 +1,5 @@
 
-<img src="path/to/your/Logo.png" alt="alt text" width="50%" height="auto">
+<img src="path/to/your/Logo.png" width="50%" height="auto">
 
 
 # <h1> **Project Background:** </h1>
