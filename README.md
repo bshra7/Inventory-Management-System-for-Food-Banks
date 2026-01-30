@@ -1,6 +1,6 @@
 
 <img src="./Logo.PNG">
-![logo](Logo.png)
+![logo](/Logo.png)
 
 
 
