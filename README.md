@@ -1,6 +1,5 @@
 
-<img width="900" height="600" alt="Image" src="https://github.com/user-attachments/assets/98e7e61f-8b6b-440c-970e-a77b16d77421" />
-
+<img width="2080" height="565" alt="Image" src="https://github.com/user-attachments/assets/29adefd5-5e30-49ef-988b-027147b8897b" />
 
 
 # <h1> **Project Background:** </h1>
