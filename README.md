@@ -1,3 +1,7 @@
+
+<img src="path/to/your/Logo.png" alt="alt text" width="50%" height="auto">
+
+
 # <h1> **Project Background:** </h1>
 
 All food banks across the province face a common issue, there is an uneven distribution of food supplies. 
