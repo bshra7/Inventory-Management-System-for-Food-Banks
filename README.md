@@ -1,5 +1,6 @@
 
-<img src="path/to/your/Logo.png" width="50%" height="auto">
+<img src="./Logo.png">
+
 
 
 # <h1> **Project Background:** </h1>
