@@ -23,7 +23,7 @@ thus undermining the purpose of a food bank despite the availability of sufficie
 <br />
 <a href="https://github.com/needhamthomas23">Thomas Needham</a>
 <br />
-<a href="http://github.com/Ishan1535">Ishan Kumar</a>
+<a href="http://github.com/Ishan1535">Ishankumar Vimalkumar Patel</a>
 
 
 
