@@ -1,3 +1,7 @@
+
+<img width="2080" height="565" alt="Image" src="https://github.com/user-attachments/assets/29adefd5-5e30-49ef-988b-027147b8897b" />
+
+
 # <h1> **Project Background:** </h1>
 
 All food banks across the province face a common issue, there is an uneven distribution of food supplies. 
@@ -19,7 +23,7 @@ thus undermining the purpose of a food bank despite the availability of sufficie
 <br />
 <a href="https://github.com/needhamthomas23">Thomas Needham</a>
 <br />
-<a href="http://github.com/Ishan1535">Ishan Kumar</a>
+<a href="http://github.com/Ishan1535">Ishankumar Vimalkumar Patel</a>
 
 
 
