@@ -1,0 +1,96 @@
+.navbar a {
+  text-decoration: none;
+}
+
+.my-custom-navbar {
+  background-color: #006b2d;
+  width: 100%;
+  position: fixed;
+  gap: 20px;
+
+}
+
+.custom-link {
+  color: #ffffff !important;
+  margin-left: 2px;
+}
+
+.custom-link:hover {
+  color: #d9f0d2 !important;
+}
+
+.my-wrapper {
+  background: #ffffff;
+  min-height: 650px;
+}
+.homepage{
+    padding: 5px;
+}
+
+.search{
+    --padding : 14px;
+    width: 600px;
+    display: center;
+    align-items: center;
+    padding: var(--padding);
+    border-radius: 28px;
+    background: rgb(220, 220, 220);
+    position: fixed;
+    right: 350px;
+    top: 150px;
+    
+}
+
+.search-input{
+    font-size: 14px;
+    color: black;
+    margin-left: var(--padding);
+    outline: none;
+    border: none;
+    background: transparent;
+    width: 500px;
+    position: absolute;
+    
+}
+#addnewitem-btn{
+    right: 200px;
+    top: 160px;
+    position: fixed;
+}
+
+#category-dropdown{
+    position: fixed;
+    top: 250px;
+    right: 900px
+}
+
+#location-dropdown{
+    position: fixed;
+    top: 250px;
+    right: 600px;
+}
+
+#expiryDate-dropdown{
+    position: fixed;
+    top: 250px;
+    right: 300px;
+}
+
+#items-list{
+    position: absolute;
+    top: 450px;
+    width: 1000px;
+    right: 150px;
+    background-color: rgb(255, 255, 255);
+    border-color: rgb(0, 0, 0);
+    border-radius: 15px;
+    border: 15px;
+    gap: 10px;
+}
+
+#item-container{
+    background-color: rgb(222, 222, 222);
+}
+
+
+
