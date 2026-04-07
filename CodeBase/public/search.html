@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PantriHub - Search</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="home-page">
+
+  <nav class="navbar my-custom-navbar">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a class="navbar-brand" href="home.html"><img src="assets/img/logo.svg" alt="PantriHub" style="height:40px;"></a>
+      <div class="d-flex gap-5">
+        <a class="custom-link" href="home.html">Home</a>
+        <a class="custom-link" href="myinventory.html">My Inventory</a>
+        <a class="custom-link" href="search.html">Search</a>
+        <a class="custom-link" href="account.html">Account</a>
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <span class="text-white" id="nav-user-name"></span>
+        <a href="#" id="logout-btn" class="custom-link">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container search-page">
+    <div class="d-flex justify-content-center">
+      <div class="search">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+        </svg>
+        <input type="text" class="search-input" id="search-input" placeholder="Search items across all food banks...">
+      </div>
+    </div>
+
+    <div class="filter-row justify-content-center">
+      <div class="btn-group" id="category-dropdown">
+        <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown">Category</button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#" data-cat="">All Categories</a></li>
+          <li><a class="dropdown-item" href="#" data-cat="Dairy">Dairy</a></li>
+          <li><a class="dropdown-item" href="#" data-cat="Bakery">Bakery</a></li>
+          <li><a class="dropdown-item" href="#" data-cat="Produce">Produce</a></li>
+          <li><a class="dropdown-item" href="#" data-cat="Grains">Grains</a></li>
+          <li><a class="dropdown-item" href="#" data-cat="Canned Goods">Canned Goods</a></li>
+          <li><a class="dropdown-item" href="#" data-cat="Pasta">Pasta</a></li>
+          <li><a class="dropdown-item" href="#" data-cat="Meat">Meat</a></li>
+          <li><a class="dropdown-item" href="#" data-cat="Frozen">Frozen</a></li>
+          <li><a class="dropdown-item" href="#" data-cat="Beverages">Beverages</a></li>
+        </ul>
+      </div>
+
+      <div class="btn-group" id="status-dropdown">
+        <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown">Status</button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" href="#" data-status="">All Statuses</a></li>
+          <li><a class="dropdown-item" href="#" data-status="Available">Available</a></li>
+          <li><a class="dropdown-item" href="#" data-status="Surplus">Surplus</a></li>
+          <li><a class="dropdown-item" href="#" data-status="Low Stock">Low Stock</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="list-group" id="items-list"></div>
+    <p id="no-results" class="text-center text-muted mt-4 d-none">No items found</p>
+  </div>
+
+  <script>
+    let currentCategory = "";
+    let currentStatus = "";
+    let searchTimeout = null;
+
+    async function searchItems() {
+      const q = document.getElementById("search-input").value.trim();
+      const params = new URLSearchParams();
+      if (q) params.set("q", q);
+      if (currentCategory) params.set("category", currentCategory);
+      if (currentStatus) params.set("status", currentStatus);
+
+      try {
+        const res = await fetch("/api/items/search?" + params.toString());
+        if (res.status === 401) { window.location.href = "/signin.html"; return; }
+        const items = await res.json();
+        const list = document.getElementById("items-list");
+        const noResults = document.getElementById("no-results");
+
+        if (items.length === 0) {
+          list.innerHTML = "";
+          noResults.classList.remove("d-none");
+          return;
+        }
+        noResults.classList.add("d-none");
+
+        list.innerHTML = items.map(item => {
+          const expDate = new Date(item.expiry).toLocaleDateString();
+          const days = Math.ceil((new Date(item.expiry) - new Date()) / 86400000);
+          const urgency = days < 0 ? "Expired" : days <= 7 ? `${days} days left` : expDate;
+          return `
+            <div class="list-group-item list-group-item-action" style="background:#dedede; margin-bottom:10px; border-radius:10px;">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <h5 class="productName mb-1">${item.name}</h5>
+                  <p class="mb-1">Quantity: ${item.quantity} ${item.unit}</p>
+                  <p class="mb-1">Category: ${item.category}</p>
+                  <p class="mb-1">Expiry: ${urgency}</p>
+                  <p class="mb-0 text-muted">Organization: ${item.organization || "N/A"}</p>
+                </div>
+                <span class="badge rounded-pill" style="background:${item.status==='Surplus'?'#ffc107':item.status==='Low Stock'?'#dc3545':'#0c8c43'}; padding:8px 14px;">
+                  ${item.status}
+                </span>
+              </div>
+            </div>`;
+        }).join("");
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      searchItems();
+
+      document.getElementById("search-input").addEventListener("input", () => {
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(searchItems, 300);
+      });
+
+      document.querySelectorAll("#category-dropdown .dropdown-item").forEach(el => {
+        el.addEventListener("click", (e) => {
+          e.preventDefault();
+          currentCategory = e.target.dataset.cat;
+          document.querySelector("#category-dropdown > button").textContent = currentCategory || "Category";
+          searchItems();
+        });
+      });
+
+      document.querySelectorAll("#status-dropdown .dropdown-item").forEach(el => {
+        el.addEventListener("click", (e) => {
+          e.preventDefault();
+          currentStatus = e.target.dataset.status;
+          document.querySelector("#status-dropdown > button").textContent = currentStatus || "Status";
+          searchItems();
+        });
+      });
+
+      fetch("/api/auth/me").then(r=>r.json()).then(u=>{
+        document.getElementById("nav-user-name").textContent = u.name||"";
+      });
+      document.getElementById("logout-btn").addEventListener("click", async(e)=>{
+        e.preventDefault(); await fetch("/api/auth/logout"); window.location.href="/signin.html";
+      });
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

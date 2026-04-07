@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PantriHub - Account</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="home-page">
+
+  <nav class="navbar my-custom-navbar">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a class="navbar-brand" href="home.html"><img src="assets/img/logo.svg" alt="PantriHub" style="height:40px;"></a>
+      <div class="d-flex gap-5">
+        <a class="custom-link" href="home.html">Home</a>
+        <a class="custom-link" href="myinventory.html">My Inventory</a>
+        <a class="custom-link" href="search.html">Search</a>
+        <a class="custom-link" href="account.html">Account</a>
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <span class="text-white" id="nav-user-name"></span>
+        <a href="#" id="logout-btn" class="custom-link">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="container my-account-section">
+    <div class="row align-items-start">
+      <div class="col-md-6 text-center">
+        <div class="account-image-wrapper">
+          <img src="assets/img/foodbank.jpg" alt="Food Bank" class="account-bank-image">
+        </div>
+
+        <div class="account-button-row">
+          <a href="myinventory.html" class="account-action-btn text-decoration-none">Bank Inventory</a>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="bank-name-box" id="account-org-display">My Food Bank</div>
+        <div class="bank-description-box" id="account-desc-display">Description here</div>
+      </div>
+    </div>
+
+    <div class="account-info-panel mt-5">
+
+      <div class="account-field-group">
+        <label class="account-label">Name:</label>
+        <div class="account-display-box editable-field" id="name-field" data-key="name" data-value=""></div>
+      </div>
+
+      <div class="account-field-group">
+        <label class="account-label">Organization:</label>
+        <div class="account-display-box editable-field" id="org-field" data-key="organization" data-value=""></div>
+      </div>
+
+      <div class="account-field-group">
+        <label class="account-label">Address:</label>
+        <div class="account-display-box editable-field" id="address-field" data-key="address" data-value=""></div>
+      </div>
+
+      <div class="account-field-group">
+        <label class="account-label">Contact(s):</label>
+        <div class="account-display-box editable-field" id="phone-field" data-key="phone" data-value=""></div>
+      </div>
+
+      <div class="account-field-group">
+        <label class="account-label">Description:</label>
+        <div class="account-display-box editable-field" id="desc-field" data-key="description" data-value=""></div>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    let userData = {};
+
+    function renderField(el, value) {
+      el.dataset.value = value || "";
+      el.innerHTML = `
+        <span class="field-text">${value || "No information added"}</span>
+        <button class="edit-icon-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293z"/>
+            <path d="M13.752 3.396l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+          </svg>
+        </button>`;
+
+      el.querySelector(".edit-icon-btn").addEventListener("click", () => renderEdit(el));
+    }
+
+    function renderEdit(el) {
+      const value = el.dataset.value || "";
+      const key = el.dataset.key;
+      el.innerHTML = `
+        <input type="text" class="account-edit-input" value="${value}">
+        <button class="save-icon-btn">Save</button>`;
+
+      const input = el.querySelector("input");
+      const saveBtn = el.querySelector(".save-icon-btn");
+      input.focus();
+
+      async function save() {
+        const newVal = input.value.trim();
+        userData[key] = newVal;
+        try {
+          await fetch("/api/account", {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(userData),
+          });
+          renderField(el, newVal);
+          updateDisplayCards();
+        } catch (err) {
+          console.error(err);
+        }
+      }
+      saveBtn.addEventListener("click", save);
+      input.addEventListener("keydown", (e) => { if (e.key === "Enter") save(); });
+    }
+
+    function updateDisplayCards() {
+      document.getElementById("account-org-display").textContent = userData.organization || "My Food Bank";
+      document.getElementById("account-desc-display").textContent = userData.description || "Description here";
+    }
+
+    async function loadAccount() {
+      try {
+        const res = await fetch("/api/auth/me");
+        if (res.status === 401) { window.location.href = "/signin.html"; return; }
+        userData = await res.json();
+
+        document.getElementById("nav-user-name").textContent = userData.name || "";
+        updateDisplayCards();
+
+        const fields = document.querySelectorAll(".editable-field");
+        fields.forEach(el => {
+          const key = el.dataset.key;
+          renderField(el, userData[key] || "");
+        });
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      loadAccount();
+      document.getElementById("logout-btn").addEventListener("click", async (e) => {
+        e.preventDefault();
+        await fetch("/api/auth/logout");
+        window.location.href = "/signin.html";
+      });
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

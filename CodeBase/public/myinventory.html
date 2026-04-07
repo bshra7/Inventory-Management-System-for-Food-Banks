@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PantriHub - My Inventory</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+      .inv-table th { background-color: #006b2d; color: white; }
+      .inv-table td { vertical-align: middle; }
+      .btn-action { padding: 4px 10px; font-size: 13px; }
+      .status-badge { padding: 4px 12px; border-radius: 999px; font-size: 13px; }
+      .status-available { background: #bfe7b8; border: 2px solid #8ef070; }
+      .status-surplus { background: #fff3cd; border: 2px solid #ffc107; }
+      .status-low { background: #f8d7da; border: 2px solid #dc3545; }
+      .inv-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 20px; }
+    </style>
+</head>
+<body class="home-page">
+
+  <nav class="navbar my-custom-navbar">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a class="navbar-brand" href="home.html"><img src="assets/img/logo.svg" alt="PantriHub" style="height:40px;"></a>
+      <div class="d-flex gap-5">
+        <a class="custom-link" href="home.html">Home</a>
+        <a class="custom-link" href="myinventory.html">My Inventory</a>
+        <a class="custom-link" href="search.html">Search</a>
+        <a class="custom-link" href="account.html">Account</a>
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <span class="text-white" id="nav-user-name"></span>
+        <a href="#" id="logout-btn" class="custom-link">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container mt-4">
+    <div class="inv-header">
+      <h2><span class="my-section-label">My Inventory</span></h2>
+      <button class="btn custom-btn-green" data-bs-toggle="modal" data-bs-target="#itemModal" onclick="openAddModal()">+ Add Item</button>
+    </div>
+
+    <div class="my-dashboard-card">
+      <div class="table-responsive">
+        <table class="table inv-table mb-0">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Quantity</th>
+              <th>Unit</th>
+              <th>Category</th>
+              <th>Expiry Date</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="inventory-body">
+            <tr><td colspan="7" class="text-center text-muted py-4">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add/Edit Modal -->
+  <div class="modal fade" id="itemModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header" style="background:#006b2d; color:white;">
+          <h5 class="modal-title" id="modal-title">Add New Item</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <form id="item-form">
+            <input type="hidden" id="item-id">
+            <div class="mb-3">
+              <label class="form-label">Item Name</label>
+              <input type="text" class="form-control" id="f-name" required>
+            </div>
+            <div class="row">
+              <div class="col-6 mb-3">
+                <label class="form-label">Quantity</label>
+                <input type="number" class="form-control" id="f-quantity" min="0" required>
+              </div>
+              <div class="col-6 mb-3">
+                <label class="form-label">Unit</label>
+                <select class="form-select" id="f-unit">
+                  <option>lbs</option><option>kg</option><option>cartons</option>
+                  <option>cans</option><option>bags</option><option>packs</option>
+                  <option>loaves</option><option>cups</option><option>boxes</option>
+                  <option>units</option>
+                </select>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Category</label>
+              <select class="form-select" id="f-category">
+                <option>Dairy</option><option>Bakery</option><option>Produce</option>
+                <option>Grains</option><option>Canned Goods</option><option>Pasta</option>
+                <option>Meat</option><option>Frozen</option><option>Beverages</option>
+                <option>Snacks</option><option>Other</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Expiry Date</label>
+              <input type="date" class="form-control" id="f-expiry" required>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Status</label>
+              <select class="form-select" id="f-status">
+                <option>Available</option><option>Surplus</option><option>Low Stock</option>
+                <option>Reserved</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn custom-btn-green" id="save-btn" onclick="saveItem()">Save Item</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Confirm Modal -->
+  <div class="modal fade" id="deleteModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header"><h5 class="modal-title">Confirm Delete</h5></div>
+        <div class="modal-body">Are you sure you want to delete this item?</div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Cancel</button>
+          <button class="btn btn-danger btn-sm" id="confirm-delete-btn">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let editingId = null;
+
+    function openAddModal() {
+      editingId = null;
+      document.getElementById("modal-title").textContent = "Add New Item";
+      document.getElementById("item-form").reset();
+      document.getElementById("f-expiry").valueAsDate = new Date(Date.now() + 14*24*60*60*1000);
+    }
+
+    function openEditModal(item) {
+      editingId = item._id;
+      document.getElementById("modal-title").textContent = "Edit Item";
+      document.getElementById("f-name").value = item.name;
+      document.getElementById("f-quantity").value = item.quantity;
+      document.getElementById("f-unit").value = item.unit;
+      document.getElementById("f-category").value = item.category;
+      document.getElementById("f-expiry").value = item.expiry.split("T")[0];
+      document.getElementById("f-status").value = item.status;
+      new bootstrap.Modal(document.getElementById("itemModal")).show();
+    }
+
+    async function saveItem() {
+      const payload = {
+        name: document.getElementById("f-name").value.trim(),
+        quantity: parseInt(document.getElementById("f-quantity").value),
+        unit: document.getElementById("f-unit").value,
+        category: document.getElementById("f-category").value,
+        expiry: document.getElementById("f-expiry").value,
+        status: document.getElementById("f-status").value,
+      };
+      if (!payload.name || !payload.quantity || !payload.expiry) return;
+
+      const url = editingId ? `/api/items/${editingId}` : "/api/items";
+      const method = editingId ? "PUT" : "POST";
+
+      const res = await fetch(url, {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+
+      if (res.ok) {
+        bootstrap.Modal.getInstance(document.getElementById("itemModal")).hide();
+        loadItems();
+      }
+    }
+
+    function confirmDelete(id) {
+      const modal = new bootstrap.Modal(document.getElementById("deleteModal"));
+      modal.show();
+      document.getElementById("confirm-delete-btn").onclick = async () => {
+        await fetch(`/api/items/${id}`, { method: "DELETE" });
+        modal.hide();
+        loadItems();
+      };
+    }
+
+    function statusClass(s) {
+      if (s === "Surplus") return "status-surplus";
+      if (s === "Low Stock") return "status-low";
+      return "status-available";
+    }
+
+    async function loadItems() {
+      try {
+        const res = await fetch("/api/items");
+        if (res.status === 401) { window.location.href = "/signin.html"; return; }
+        const items = await res.json();
+        const tbody = document.getElementById("inventory-body");
+
+        if (items.length === 0) {
+          tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted py-4">No items yet. Click "+ Add Item" to get started.</td></tr>';
+          return;
+        }
+
+        tbody.innerHTML = items.map(item => {
+          const expDate = new Date(item.expiry).toLocaleDateString();
+          const days = Math.ceil((new Date(item.expiry) - new Date()) / (86400000));
+          const expiryDisplay = days < 0 ? `<span class="text-danger">${expDate} (Expired)</span>` :
+                                days <= 7 ? `<span class="text-warning">${expDate} (${days}d)</span>` :
+                                expDate;
+          return `<tr>
+            <td><strong>${item.name}</strong></td>
+            <td>${item.quantity}</td>
+            <td>${item.unit}</td>
+            <td>${item.category}</td>
+            <td>${expiryDisplay}</td>
+            <td><span class="status-badge ${statusClass(item.status)}">${item.status}</span></td>
+            <td>
+              <button class="btn btn-outline-success btn-action" onclick='openEditModal(${JSON.stringify(item)})'>Edit</button>
+              <button class="btn btn-outline-danger btn-action" onclick="confirmDelete('${item._id}')">Delete</button>
+            </td>
+          </tr>`;
+        }).join("");
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      loadItems();
+      fetch("/api/auth/me").then(r=>r.json()).then(u=>{
+        document.getElementById("nav-user-name").textContent = u.name||"";
+      });
+      document.getElementById("logout-btn").addEventListener("click", async(e)=>{
+        e.preventDefault(); await fetch("/api/auth/logout"); window.location.href="/signin.html";
+      });
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

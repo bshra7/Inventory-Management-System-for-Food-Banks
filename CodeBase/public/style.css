@@ -1,0 +1,637 @@
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.navbar a {
+  text-decoration: none;
+}
+
+.my-custom-navbar {
+  background-color: #006b2d;
+}
+
+.custom-link {
+  color: #ffffff !important;
+  margin-left: 12px;
+}
+
+.custom-link:hover {
+  color: #d9f0d2 !important;
+}
+
+.home-page {
+  background-color: #eef2ec;
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+
+.nav-search-wrapper {
+  position: relative;
+}
+
+.nav-search-input {
+  width: 220px;
+  padding: 6px 36px 6px 12px; 
+  border-radius: 999px;
+  border: none;
+  outline: none;
+  background-color: #d9f0d2;
+  font-size: 14px;
+}
+
+.search-icon {
+  position: absolute;
+  right: 10px;          
+  top: 50%;
+  transform: translateY(-50%);
+  color: #056b38;
+  pointer-events: none; 
+}
+
+
+.my-wrapper {
+  background: #ffffff;
+  min-height: 650px;
+}
+
+.my-left-panel {
+  background: url("assets/img/image.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.my-right-panel {
+  background: #ffffff;
+  padding: 40px 24px;
+}
+
+.my-form-card {
+  max-width: 430px;
+  margin: 0 auto;
+}
+
+.my-form-title {
+  color: #056b38;
+  font-weight: bold;
+}
+
+.my-custom-input {
+  border-radius: 12px;
+  padding: 12px 14px;
+  border: 1px solid #ced4da;
+}
+
+.my-custom-input:focus {
+  border-color: #3aaa35;
+  box-shadow: 0 0 0 0.2rem rgba(58, 170, 53, 0.2);
+}
+
+.custom-btn-green {
+  background-color: #0c8c43;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  font-weight: bold;
+}
+
+.custom-btn-green:hover {
+  background-color: #056b38;
+  color: white;
+}
+
+.my-link {
+  color: #0ea44b;
+  text-decoration: none;
+}
+
+.my-link:hover {
+  text-decoration: underline;
+}
+
+.signin-page-body {
+  min-height: 100vh;
+  background: #abc0a6 !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.signin-page-body .card {
+  overflow: hidden;
+  border: 0 !important;
+  border-radius: 6px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.img-left {
+  width: 45%;
+  background: url("assets/img/foodbank.jpg") center;
+  background-size: cover;
+}
+
+.signin-page-body .card-body {
+  padding: 2rem;
+}
+
+.title {
+  margin-bottom: 2rem;
+  color: darkgreen;
+}
+
+.form-input {
+  position: relative;
+}
+
+.form-input input {
+  width: 100%;
+  height: 45px;
+  padding-left: 40px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  border: 1px solid black;
+  border-radius: 50px;
+  outline: none;
+  background: transparent;
+}
+
+.form-input input:focus {
+  border: 2px solid green;
+}
+
+.envIcon,
+.keyIcon {
+  position: absolute;
+  left: 14px;
+  top: 13px;
+  color: green;
+}
+
+#signinbtn {
+  background-color: rgb(53, 114, 53);
+  color: white;
+}
+
+#signinbtn:hover {
+  background-color: rgb(38, 95, 38);
+  color: white;
+}
+
+#checkDefault {
+  border: darkgreen solid;
+}
+
+
+.top-dashboard-section {
+  padding-top: 35px;
+}
+
+.my-dashboard-card {
+  background-color: #d7e3d2;
+  border-radius: 18px;
+  padding: 20px;
+  min-height: 320px;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
+}
+
+.my-dashboard-card h3 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: normal;
+  color: #111111;
+}
+
+.chart-placeholder {
+  height: 220px;
+  display: flex;
+  align-items: flex-end;
+  gap: 8px;
+  padding: 10px 0;
+  overflow: hidden;
+}
+
+.chart-bar {
+  flex: 1;
+  background-color: #0c8c43;
+  border-radius: 10px 10px 0 0;
+}
+
+.chart-bar-1 { height: 80px; }
+.chart-bar-2 { height: 140px; }
+.chart-bar-3 { height: 110px; }
+.chart-bar-4 { height: 170px; }
+.chart-bar-5 { height: 130px; }
+
+.kpi-box {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 25px 15px;
+  text-align: center;
+  height: 100%;
+}
+
+.kpi-box h4 {
+  font-size: 32px;
+  color: #056b38;
+  margin-bottom: 10px;
+}
+
+.kpi-box p {
+  margin: 0;
+  color: #444444;
+  font-size: 16px;
+}
+
+.my-section-label {
+  display: inline-block;
+  background-color: #006b2d;
+  color: white;
+  padding: 10px 26px;
+  border-radius: 999px;
+  font-size: 20px;
+  line-height: 1;
+  margin: 0;
+}
+
+.view-toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  background-color: #bfe7b8;
+  border: 3px solid #8ef070;
+  border-radius: 999px;
+  padding: 3px;
+  overflow: hidden;
+}
+
+.view-toggle button {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 8px 20px;
+  font-size: 16px;
+  color: #111111;
+  border-radius: 999px;
+  position: relative;
+  z-index: 2;
+}
+
+.view-toggle .active-view {
+  font-weight: 600;
+  background-color: #ffffff;
+}
+
+.toggle-pill {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: calc(50% - 3px);
+  height: calc(100% - 6px);
+  background-color: white;
+  border-radius: 999px;
+  z-index: 1;
+  transition: transform 0.35s ease;
+}
+
+.view-toggle.list-active .toggle-pill {
+  transform: translateX(100%);
+}
+
+.my-card-box {
+  background-color: #d7e3d2;
+  border-radius: 18px;
+  padding: 30px 25px;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.12);
+}
+
+.my-item-card {
+  background-color: #ffffff;
+  border-radius: 18px;
+  padding: 16px;
+  height: 100%;
+}
+
+.my-item-image img {
+  width: 100%;
+  background-color: #9fd196;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-bottom: 14px;
+}
+
+.my-item-content h5 {
+  margin-bottom: 10px;
+  color: #111111;
+}
+
+.my-item-text {
+  color: #666666;
+  font-size: 15px;
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+.my-small-pill {
+  display: inline-block;
+  background-color: #bfe7b8;
+  border: 2px solid #8ef070;
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-size: 14px;
+  color: #111111;
+  margin-top: 8px;
+}
+
+.my-list-box {
+  background-color: #d7e3d2;
+  border-radius: 18px;
+  padding: 20px;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.12);
+}
+
+.my-list-row {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr 120px;
+  align-items: center;
+  gap: 15px;
+  background-color: #ffffff;
+  padding: 16px 18px;
+  border-radius: 14px;
+  margin-bottom: 14px;
+}
+
+.my-list-row:last-child {
+  margin-bottom: 0;
+}
+
+.list-status {
+  background-color: #bfe7b8;
+  border: 2px solid #8ef070;
+  border-radius: 999px;
+  text-align: center;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+
+.my-account-section {
+  padding-top: 60px;
+}
+
+.account-image-wrapper {
+  width: 440px;
+  height: 440px;
+  margin: 0 auto;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 1px solid #444;
+}
+
+.account-bank-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.account-button-row {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 32px;
+  flex-wrap: wrap;
+}
+
+.account-action-btn {
+  background-color: transparent;
+  border: 4px solid #8ef070;
+  border-radius: 999px;
+  padding: 10px 22px;
+  font-size: 16px;
+  color: #111111;
+}
+
+.account-action-btn:hover {
+  background-color: #dff5d8;
+}
+
+.bank-name-box {
+  background-color: #39a941;
+  color: white;
+  border-radius: 20px;
+  padding: 28px 30px;
+  font-size: 28px;
+  text-align: center;
+  margin-bottom: 18px;
+  width: 320px;
+}
+
+.bank-description-box {
+  background-color: #9bd08f;
+  color: white;
+  border-radius: 28px;
+  padding: 24px;
+  font-size: 24px;
+  width: 360px;
+  height: 250px;
+  margin-top: 15px;
+}
+
+.account-info-panel {
+  background-color: #d9d9d9;
+  padding: 30px 36px 60px 36px;
+  box-shadow: 12px 12px 12px rgba(0, 0, 0, 0.18);
+}
+
+.account-field-group {
+  margin-bottom: 28px;
+}
+
+.account-label {
+  display: block;
+  font-size: 24px;
+  color: #111111;
+  margin-bottom: 10px;
+}
+
+.account-display-box {
+  width: 100%;
+  min-height: 58px;
+  background-color: #c6c4c4;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  font-size: 16px;
+  color: #111111;
+}
+
+.field-text {
+  flex: 1;
+  padding-right: 12px;
+}
+
+.edit-icon-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: #111111;
+}
+
+.edit-icon-btn:hover {
+  color: #056b38;
+}
+
+.account-edit-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 16px;
+  color: #111111;
+  padding-right: 12px;
+}
+
+.save-icon-btn {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 20px;
+  color: #056b38;
+}
+
+
+.inventory-page h2 {
+  text-align: center;
+}
+
+.smallcontainer {
+  width: 110px;
+  height: 50px;
+  background-color: #357953;
+  border: 2px solid #357953;
+  border-radius: 8px;
+  color: white;
+  text-align: center;
+  display: grid;
+  align-items: center;
+}
+
+.card-slider .card-item {
+  width: 400px;
+  height: 450px;
+  background: rgb(103, 162, 103);
+  padding: 24px;
+  border-radius: 8px;
+}
+
+.card-slider .card-item .card-image {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+  border: 3px solid rgb(182, 255, 182);
+  border-end-start-radius: 8px;
+}
+
+.card-slider .card-item .card-title {
+  font-size: 24px;
+  margin: 16px 0 8px;
+}
+
+.card-slider .card-item .viewBtn {
+  padding: 8px 24px;
+  margin-top: 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  outline: none;
+}
+
+.card-slider .card-item .viewBtn:hover {
+  background: transparent;
+  color: rgb(61, 179, 61);
+}
+
+.swiper-button-prev,
+.swiper-button-next {
+  background-color: transparent;
+  border-radius: 20px;
+}
+
+.swiper-button-prev svg,
+.swiper-button-next svg {
+  stroke: rgb(9, 95, 9);
+}
+
+
+.search-page {
+  padding-top: 40px;
+}
+
+.search {
+  --padding: 14px;
+  width: 600px;
+  display: flex;
+  align-items: center;
+  padding: var(--padding);
+  border-radius: 28px;
+  background: rgb(220, 220, 220);
+}
+
+.search-input {
+  font-size: 14px;
+  color: black;
+  margin-left: var(--padding);
+  outline: none;
+  border: none;
+  background: transparent;
+  width: 100%;
+}
+
+#items-list {
+  width: 100%;
+  max-width: 1000px;
+  margin: 40px auto 0;
+  background-color: rgb(255, 255, 255);
+  border-radius: 15px;
+  gap: 10px;
+}
+
+#item-container,
+#items-list .list-group-item {
+  background-color: rgb(222, 222, 222);
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+
+@media (max-width: 991px) {
+  .account-image-wrapper {
+    width: 320px;
+    height: 320px;
+    margin-bottom: 20px;
+  }
+
+  .bank-name-box,
+  .bank-description-box {
+    width: 100%;
+  }
+
+  .my-list-row {
+    grid-template-columns: 1fr;
+  }
+}

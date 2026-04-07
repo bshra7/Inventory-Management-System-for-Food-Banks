@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PantriHub Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="home-page">
+
+  <nav class="navbar my-custom-navbar">
+    <div class="container d-flex justify-content-between align-items-center">
+      <a class="navbar-brand" href="home.html"><img src="assets/img/logo.svg" alt="PantriHub" style="height:40px;"></a>
+      <div class="d-flex gap-5">
+        <a class="custom-link" href="home.html">Home</a>
+        <a class="custom-link" href="myinventory.html">My Inventory</a>
+        <a class="custom-link" href="search.html">Search</a>
+        <a class="custom-link" href="account.html">Account</a>
+      </div>
+      <div class="d-flex align-items-center gap-3">
+        <span class="text-white" id="nav-user-name"></span>
+        <a href="#" id="logout-btn" class="custom-link">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- KPI -->
+  <section class="container top-dashboard-section">
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="my-dashboard-card">
+          <h3>Inventory by Category</h3>
+          <div class="chart-placeholder mt-4" id="category-chart"></div>
+        </div>
+      </div>
+
+      <div class="col-md-8">
+        <div class="my-dashboard-card">
+          <h3>Metrics</h3>
+          <div class="row mt-4 g-3">
+            <div class="col-md-3">
+              <div class="kpi-box">
+                <h4 id="kpi-total">0</h4>
+                <p>Total Items</p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="kpi-box">
+                <h4 id="kpi-quantity">0</h4>
+                <p>Total Quantity</p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="kpi-box">
+                <h4 id="kpi-expiring">0</h4>
+                <p>Expiring Soon</p>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="kpi-box">
+                <h4 id="kpi-surplus">0</h4>
+                <p>Surplus Items</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Expiring Soon -->
+  <section class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
+      <h2 class="my-section-label">Expiring Soon</h2>
+      <div class="view-toggle" id="expiring-toggle">
+        <button id="expiring-card-btn" class="active-view">Card</button>
+        <button id="expiring-list-btn">List</button>
+      </div>
+    </div>
+
+    <div id="expiring-card-view" class="my-card-box">
+      <div class="row g-4" id="expiring-cards"></div>
+      <p id="expiring-empty" class="text-center text-muted py-4 d-none">No items expiring soon</p>
+    </div>
+
+    <div id="expiring-list-view" class="my-list-box" style="display: none;">
+      <div id="expiring-list"></div>
+      <p id="expiring-list-empty" class="text-center text-muted py-4 d-none">No items expiring soon</p>
+    </div>
+  </section>
+
+  <!-- Surpluses -->
+  <section class="container mt-4 mb-5">
+    <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mb-3">
+      <h2 class="my-section-label">Surpluses</h2>
+      <div class="view-toggle" id="surplus-toggle">
+        <button id="surplus-card-btn" class="active-view">Card</button>
+        <button id="surplus-list-btn">List</button>
+      </div>
+    </div>
+
+    <div id="surplus-card-view" class="my-card-box">
+      <div class="row g-4" id="surplus-cards"></div>
+      <p id="surplus-empty" class="text-center text-muted py-4 d-none">No surplus items</p>
+    </div>
+
+    <div id="surplus-list-view" class="my-list-box" style="display: none;">
+      <div id="surplus-list"></div>
+      <p id="surplus-list-empty" class="text-center text-muted py-4 d-none">No surplus items</p>
+    </div>
+  </section>
+
+  <script>
+    const categoryImages = {
+      "Dairy": "assets/img/milk.jpg",
+      "Bakery": "assets/img/bread.jpg",
+      "Produce": "assets/img/apples.jpg",
+      "Grains": "assets/img/rice.jpg",
+      "Canned Goods": "assets/img/beans.jpg",
+      "Pasta": "assets/img/pasta.jpg",
+    };
+    function getImage(cat) {
+      return categoryImages[cat] || "assets/img/foodbank.jpg";
+    }
+    function daysUntil(dateStr) {
+      const diff = new Date(dateStr) - new Date();
+      return Math.ceil(diff / (1000 * 60 * 60 * 24));
+    }
+
+    function renderItemCard(item) {
+      const days = daysUntil(item.expiry);
+      const label = days <= 0 ? "Expired" : days + " days left";
+      const pill = item.status === "Surplus" ? "Surplus" : "Urgent";
+      return `
+        <div class="col-md-4">
+          <div class="my-item-card">
+            <div class="my-item-image"><img src="${getImage(item.category)}" alt="${item.name}"></div>
+            <div class="my-item-content">
+              <h5>${item.name}</h5>
+              <p class="my-item-text">Quantity: ${item.quantity} ${item.unit}</p>
+              <p class="my-item-text">${item.status === "Surplus" ? "Available to share" : "Expiry: " + label}</p>
+              <div class="my-small-pill">${pill}</div>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    function renderItemRow(item) {
+      const days = daysUntil(item.expiry);
+      const label = days <= 0 ? "Expired" : days + " days left";
+      const pill = item.status === "Surplus" ? "Surplus" : "Urgent";
+      return `
+        <div class="my-list-row">
+          <span>${item.name}</span>
+          <span>${item.quantity} ${item.unit}</span>
+          <span>${item.status === "Surplus" ? "Available to share" : label}</span>
+          <span class="list-status">${pill}</span>
+        </div>`;
+    }
+
+    async function loadDashboard() {
+      try {
+        const res = await fetch("/api/dashboard");
+        if (res.status === 401) { window.location.href = "/signin.html"; return; }
+        const data = await res.json();
+
+        document.getElementById("kpi-total").textContent = data.totalItems;
+        document.getElementById("kpi-quantity").textContent = data.totalQuantity;
+        document.getElementById("kpi-expiring").textContent = data.expiringSoonCount;
+        document.getElementById("kpi-surplus").textContent = data.surplusCount;
+
+        // Category chart bars
+        const chartEl = document.getElementById("category-chart");
+        const cats = Object.entries(data.categories);
+        if (cats.length > 0) {
+          const maxVal = Math.max(...cats.map(([, v]) => v));
+          chartEl.innerHTML = cats.map(([cat, val]) => {
+            const pct = Math.max(10, (val / maxVal) * 100);
+            return `<div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%; min-width:0; overflow:hidden;">
+              <small style="font-size:11px; margin-bottom:2px; color:#056b38; font-weight:600;">${val}</small>
+              <div style="background:#0c8c43; border-radius:10px 10px 0 0; width:80%; height:${pct}%;"></div>
+              <small style="font-size:10px; margin-top:4px; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:100%;">${cat}</small>
+            </div>`;
+          }).join("");
+        }
+
+        // Expiring soon
+        const expiringCards = document.getElementById("expiring-cards");
+        const expiringList = document.getElementById("expiring-list");
+        if (data.expiringSoon.length === 0) {
+          document.getElementById("expiring-empty").classList.remove("d-none");
+          document.getElementById("expiring-list-empty").classList.remove("d-none");
+        } else {
+          expiringCards.innerHTML = data.expiringSoon.map(renderItemCard).join("");
+          expiringList.innerHTML = data.expiringSoon.map(renderItemRow).join("");
+        }
+
+        // Surplus
+        const surplusCards = document.getElementById("surplus-cards");
+        const surplusList = document.getElementById("surplus-list");
+        if (data.surplus.length === 0) {
+          document.getElementById("surplus-empty").classList.remove("d-none");
+          document.getElementById("surplus-list-empty").classList.remove("d-none");
+        } else {
+          surplusCards.innerHTML = data.surplus.map(renderItemCard).join("");
+          surplusList.innerHTML = data.surplus.map(renderItemRow).join("");
+        }
+      } catch (err) {
+        console.error("Dashboard load error:", err);
+      }
+    }
+
+    // View toggles
+    document.addEventListener("DOMContentLoaded", () => {
+      loadDashboard();
+
+      // Load user name
+      fetch("/api/auth/me").then(r => r.json()).then(u => {
+        document.getElementById("nav-user-name").textContent = u.name || "";
+      });
+
+      // Logout
+      document.getElementById("logout-btn").addEventListener("click", async (e) => {
+        e.preventDefault();
+        await fetch("/api/auth/logout");
+        window.location.href = "/signin.html";
+      });
+
+      // Toggle: Expiring
+      const ecBtn = document.getElementById("expiring-card-btn");
+      const elBtn = document.getElementById("expiring-list-btn");
+      const ecView = document.getElementById("expiring-card-view");
+      const elView = document.getElementById("expiring-list-view");
+      ecBtn.addEventListener("click", () => { ecView.style.display="block"; elView.style.display="none"; ecBtn.classList.add("active-view"); elBtn.classList.remove("active-view"); });
+      elBtn.addEventListener("click", () => { ecView.style.display="none"; elView.style.display="block"; elBtn.classList.add("active-view"); ecBtn.classList.remove("active-view"); });
+
+      // Toggle: Surplus
+      const scBtn = document.getElementById("surplus-card-btn");
+      const slBtn = document.getElementById("surplus-list-btn");
+      const scView = document.getElementById("surplus-card-view");
+      const slView = document.getElementById("surplus-list-view");
+      scBtn.addEventListener("click", () => { scView.style.display="block"; slView.style.display="none"; scBtn.classList.add("active-view"); slBtn.classList.remove("active-view"); });
+      slBtn.addEventListener("click", () => { scView.style.display="none"; slView.style.display="block"; slBtn.classList.add("active-view"); scBtn.classList.remove("active-view"); });
+    });
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
