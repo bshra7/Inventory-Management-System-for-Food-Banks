@@ -1,34 +1,11 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const User = require("./models/User");
+const Item = require("./models/Item");
 
 const MONGO_URI = "mongodb://127.0.0.1:27017/pantriHub";
 
-// Schemas (must match server.js)
-const userSchema = new mongoose.Schema({
-  name: String,
-  email: String,
-  password: String,
-  organization: String,
-  address: String,
-  phone: String,
-  description: String,
-  createdAt: { type: Date, default: Date.now },
-});
-const User = mongoose.model("User", userSchema);
-
-const itemSchema = new mongoose.Schema({
-  name: String,
-  quantity: Number,
-  unit: String,
-  category: String,
-  expiry: Date,
-  status: String,
-  organization: String,
-  createdBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
-  createdAt: { type: Date, default: Date.now },
-});
-const Item = mongoose.model("Item", itemSchema);
-
+// helper to get a date X days from now
 function daysFromNow(days) {
   return new Date(Date.now() + days * 24 * 60 * 60 * 1000);
 }
@@ -37,12 +14,12 @@ async function seed() {
   await mongoose.connect(MONGO_URI);
   console.log("Connected to MongoDB");
 
-  // Clear existing data
+  // clear existing data
   await User.deleteMany({});
   await Item.deleteMany({});
   console.log("Cleared existing data");
 
-  // Create demo user (password: demo123)
+  // create demo user (password: demo123)
   const hashed = await bcrypt.hash("demo123", 10);
   const user = await User.create({
     name: "Sarah Johnson",
@@ -55,7 +32,7 @@ async function seed() {
   });
   console.log("Created demo user: demo@pantrihub.com / demo123");
 
-  // Create a second food bank user
+  // create a second food bank user
   const user2 = await User.create({
     name: "Mike Thompson",
     email: "mike@saskatoonfoodbank.ca",
@@ -66,7 +43,7 @@ async function seed() {
     description: "Supporting families in Saskatoon with nutritious food and community programs.",
   });
 
-  // Seed items for Regina Food Bank
+  // items for Regina Food Bank
   const reginaItems = [
     { name: "Whole Milk", quantity: 12, unit: "cartons", category: "Dairy", expiry: daysFromNow(2), status: "Available" },
     { name: "White Bread", quantity: 25, unit: "loaves", category: "Bakery", expiry: daysFromNow(1), status: "Available" },
@@ -85,7 +62,7 @@ async function seed() {
     { name: "Chicken Breast", quantity: 12, unit: "lbs", category: "Meat", expiry: daysFromNow(2), status: "Available" },
   ];
 
-  // Seed items for Saskatoon Food Bank
+  // items for Saskatoon Food Bank
   const saskatoonItems = [
     { name: "2% Milk", quantity: 20, unit: "cartons", category: "Dairy", expiry: daysFromNow(4), status: "Surplus" },
     { name: "Whole Wheat Bread", quantity: 15, unit: "loaves", category: "Bakery", expiry: daysFromNow(2), status: "Available" },
@@ -94,11 +71,30 @@ async function seed() {
     { name: "Macaroni", quantity: 50, unit: "boxes", category: "Pasta", expiry: daysFromNow(250), status: "Surplus" },
   ];
 
+  // insert all items into the database
   for (const item of reginaItems) {
-    await Item.create({ ...item, organization: "Regina Food Bank", createdBy: user._id });
+    await Item.create({
+      name: item.name,
+      quantity: item.quantity,
+      unit: item.unit,
+      category: item.category,
+      expiry: item.expiry,
+      status: item.status,
+      organization: "Regina Food Bank",
+      createdBy: user._id,
+    });
   }
   for (const item of saskatoonItems) {
-    await Item.create({ ...item, organization: "Saskatoon Food Bank", createdBy: user2._id });
+    await Item.create({
+      name: item.name,
+      quantity: item.quantity,
+      unit: item.unit,
+      category: item.category,
+      expiry: item.expiry,
+      status: item.status,
+      organization: "Saskatoon Food Bank",
+      createdBy: user2._id,
+    });
   }
 
   console.log(`Seeded ${reginaItems.length + saskatoonItems.length} inventory items`);
@@ -111,7 +107,7 @@ async function seed() {
   console.log("Done!");
 }
 
-seed().catch(err => {
+seed().catch((err) => {
   console.error("Seed error:", err);
   process.exit(1);
 });
