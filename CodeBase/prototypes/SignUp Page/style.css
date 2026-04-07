@@ -1,0 +1,82 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.navbar a {
+  text-decoration: none;
+}
+
+.my-custom-navbar {
+  background-color: #006b2d;
+}
+
+.custom-link {
+  color: #ffffff !important;
+  margin-left: 12px;
+}
+
+.custom-link:hover {
+  color: #d9f0d2 !important;
+}
+
+.my-wrapper {
+  background: #ffffff;
+  min-height: 650px;
+}
+
+.my-left-panel {
+  background: url("assets/img/image.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.my-right-panel {
+  background: #ffffff;
+  padding: 40px 24px;
+}
+
+.my-form-card {
+  max-width: 430px;
+  margin: 0 auto;
+}
+
+.my-form-title {
+  color: #056b38;
+  font-weight: bold;
+}
+
+.my-custom-input {
+  border-radius: 12px;
+  padding: 12px 14px;
+  border: 1px solid #ced4da;
+}
+
+.my-custom-input:focus {
+  border-color: #3aaa35;
+  box-shadow: 0 0 0 0.2rem rgba(58, 170, 53, 0.2);
+}
+
+.custom-btn-green {
+  background-color: #0c8c43;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  font-weight: bold;
+}
+
+.custom-btn-green:hover {
+  background-color: #056b38;
+  color: white;
+}
+
+.my-link {
+  color: #0ea44b;
+  text-decoration: none;
+}
+
+.my-small-link:hover {
+  text-decoration: underline;
+}
