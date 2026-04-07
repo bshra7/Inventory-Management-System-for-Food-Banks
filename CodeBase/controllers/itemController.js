@@ -21,17 +21,33 @@ exports.getItems = async (req, res) => {
 // search items across all organizations
 exports.searchItems = async (req, res) => {
   try {
-    const { q, category, status } = req.query;
+    const { q, category, status, organization, expiryFrom, expiryTo } = req.query;
     const filter = {};
 
     if (q) filter.name = { $regex: q, $options: "i" };
     if (category) filter.category = category;
     if (status) filter.status = status;
+    if (organization) filter.organization = organization;
+    if (expiryFrom || expiryTo) {
+      filter.expiry = {};
+      if (expiryFrom) filter.expiry.$gte = new Date(expiryFrom);
+      if (expiryTo) filter.expiry.$lte = new Date(expiryTo);
+    }
 
     const items = await Item.find(filter).sort({ expiry: 1 });
     res.json(items);
   } catch (err) {
     res.status(500).json({ error: "Search failed" });
+  }
+};
+
+// get all unique organization names for filter dropdowns
+exports.getOrganizations = async (req, res) => {
+  try {
+    const orgs = await Item.distinct("organization");
+    res.json(orgs.filter((o) => o));
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch organizations" });
   }
 };
 

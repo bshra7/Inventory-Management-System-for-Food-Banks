@@ -168,6 +168,7 @@
               <h5>${item.name}</h5>
               <p class="my-item-text">Quantity: ${item.quantity} ${item.unit}</p>
               <p class="my-item-text">${item.status === "Surplus" ? "Available to share" : "Expiry: " + label}</p>
+              <p class="my-item-text" style="font-size:13px; color:#888;">${item.organization || "N/A"}</p>
               <div class="my-small-pill">${pill}</div>
             </div>
           </div>
@@ -182,6 +183,7 @@
         <div class="my-list-row">
           <span>${item.name}</span>
           <span>${item.quantity} ${item.unit}</span>
+          <span>${item.organization || "N/A"}</span>
           <span>${item.status === "Surplus" ? "Available to share" : label}</span>
           <span class="list-status">${pill}</span>
         </div>`;

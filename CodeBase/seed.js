@@ -19,23 +19,32 @@ async function seed() {
   await Item.deleteMany({});
   console.log("Cleared existing data");
 
-  // create demo user (password: demo123)
+  // create food bank users (password: demo123)
   const hashed = await bcrypt.hash("demo123", 10);
-  const user = await User.create({
+
+  const regina = await User.create({
     name: "Sarah Johnson",
-    email: "demo@pantrihub.com",
+    email: "regina@pantrihub.com",
     password: hashed,
     organization: "Regina Food Bank",
     address: "445 Winnipeg Street, Regina, SK S4R 8P2",
     phone: "306-791-6533",
     description: "Serving the Regina community since 1982. We provide food to over 25,000 people each month.",
   });
-  console.log("Created demo user: demo@pantrihub.com / demo123");
 
-  // create a second food bank user
-  const user2 = await User.create({
+  const mooseJaw = await User.create({
+    name: "Lisa Chen",
+    email: "moosejaw@pantrihub.com",
+    password: hashed,
+    organization: "Moose Jaw Food Bank",
+    address: "65 Ominica Street West, Moose Jaw, SK S6H 1X4",
+    phone: "306-692-2911",
+    description: "Providing essential food support to families and individuals in the Moose Jaw community.",
+  });
+
+  const saskatoon = await User.create({
     name: "Mike Thompson",
-    email: "mike@saskatoonfoodbank.ca",
+    email: "saskatoon@pantrihub.com",
     password: hashed,
     organization: "Saskatoon Food Bank",
     address: "202 Avenue C South, Saskatoon, SK S7M 1N2",
@@ -62,6 +71,20 @@ async function seed() {
     { name: "Chicken Breast", quantity: 12, unit: "lbs", category: "Meat", expiry: daysFromNow(2), status: "Available" },
   ];
 
+  // items for Moose Jaw Food Bank
+  const mooseJawItems = [
+    { name: "Skim Milk", quantity: 10, unit: "cartons", category: "Dairy", expiry: daysFromNow(3), status: "Available" },
+    { name: "Rye Bread", quantity: 12, unit: "loaves", category: "Bakery", expiry: daysFromNow(2), status: "Available" },
+    { name: "Canned Corn", quantity: 55, unit: "cans", category: "Canned Goods", expiry: daysFromNow(350), status: "Surplus" },
+    { name: "Potatoes", quantity: 25, unit: "lbs", category: "Produce", expiry: daysFromNow(14), status: "Available" },
+    { name: "Penne Pasta", quantity: 40, unit: "boxes", category: "Pasta", expiry: daysFromNow(220), status: "Surplus" },
+    { name: "Chicken Thighs", quantity: 10, unit: "lbs", category: "Meat", expiry: daysFromNow(2), status: "Available" },
+    { name: "Canned Soup", quantity: 35, unit: "cans", category: "Canned Goods", expiry: daysFromNow(300), status: "Surplus" },
+    { name: "Butter", quantity: 6, unit: "lbs", category: "Dairy", expiry: daysFromNow(5), status: "Low Stock" },
+    { name: "Oatmeal", quantity: 15, unit: "boxes", category: "Grains", expiry: daysFromNow(120), status: "Available" },
+    { name: "Apple Juice", quantity: 18, unit: "cartons", category: "Beverages", expiry: daysFromNow(30), status: "Available" },
+  ];
+
   // items for Saskatoon Food Bank
   const saskatoonItems = [
     { name: "2% Milk", quantity: 20, unit: "cartons", category: "Dairy", expiry: daysFromNow(4), status: "Surplus" },
@@ -69,39 +92,29 @@ async function seed() {
     { name: "Canned Tomatoes", quantity: 45, unit: "cans", category: "Canned Goods", expiry: daysFromNow(400), status: "Surplus" },
     { name: "Carrots", quantity: 8, unit: "lbs", category: "Produce", expiry: daysFromNow(5), status: "Low Stock" },
     { name: "Macaroni", quantity: 50, unit: "boxes", category: "Pasta", expiry: daysFromNow(250), status: "Surplus" },
+    { name: "Greek Yogurt", quantity: 22, unit: "cups", category: "Dairy", expiry: daysFromNow(6), status: "Available" },
+    { name: "Brown Rice", quantity: 30, unit: "bags", category: "Grains", expiry: daysFromNow(150), status: "Surplus" },
+    { name: "Frozen Berries", quantity: 14, unit: "bags", category: "Frozen", expiry: daysFromNow(60), status: "Available" },
   ];
 
   // insert all items into the database
   for (const item of reginaItems) {
-    await Item.create({
-      name: item.name,
-      quantity: item.quantity,
-      unit: item.unit,
-      category: item.category,
-      expiry: item.expiry,
-      status: item.status,
-      organization: "Regina Food Bank",
-      createdBy: user._id,
-    });
+    await Item.create({ ...item, organization: "Regina Food Bank", createdBy: regina._id });
+  }
+  for (const item of mooseJawItems) {
+    await Item.create({ ...item, organization: "Moose Jaw Food Bank", createdBy: mooseJaw._id });
   }
   for (const item of saskatoonItems) {
-    await Item.create({
-      name: item.name,
-      quantity: item.quantity,
-      unit: item.unit,
-      category: item.category,
-      expiry: item.expiry,
-      status: item.status,
-      organization: "Saskatoon Food Bank",
-      createdBy: user2._id,
-    });
+    await Item.create({ ...item, organization: "Saskatoon Food Bank", createdBy: saskatoon._id });
   }
 
-  console.log(`Seeded ${reginaItems.length + saskatoonItems.length} inventory items`);
-  console.log("\n--- Demo Login ---");
-  console.log("Email: demo@pantrihub.com");
-  console.log("Password: demo123");
-  console.log("------------------\n");
+  const totalItems = reginaItems.length + mooseJawItems.length + saskatoonItems.length;
+  console.log(`Seeded ${totalItems} inventory items`);
+  console.log("\n--- Demo Logins (password: demo123) ---");
+  console.log("Regina:    regina@pantrihub.com");
+  console.log("Moose Jaw: moosejaw@pantrihub.com");
+  console.log("Saskatoon: saskatoon@pantrihub.com");
+  console.log("---------------------------------------\n");
 
   await mongoose.disconnect();
   console.log("Done!");

@@ -6,6 +6,7 @@ const requireAuth = require("../middleware/auth");
 
 router.get("/", requireAuth, itemController.getItems);
 router.get("/search", requireAuth, itemController.searchItems);
+router.get("/organizations", requireAuth, itemController.getOrganizations);
 router.post("/", requireAuth, itemController.addItem);
 router.put("/:id", requireAuth, itemController.updateItem);
 router.delete("/:id", requireAuth, itemController.deleteItem);
