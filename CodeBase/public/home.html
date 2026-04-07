@@ -112,6 +112,30 @@
   </section>
 
   <script>
+    const nameImages = {
+      "milk": "assets/img/milk.jpg",
+      "yogurt": "assets/img/milk.jpg",
+      "cheese": "assets/img/milk.jpg",
+      "eggs": "assets/img/milk.jpg",
+      "butter": "assets/img/milk.jpg",
+      "cream": "assets/img/milk.jpg",
+      "bread": "assets/img/bread.jpg",
+      "apple": "assets/img/apples.jpg",
+      "banana": "assets/img/apples.jpg",
+      "carrot": "assets/img/apples.jpg",
+      "orange": "assets/img/apples.jpg",
+      "tomato": "assets/img/apples.jpg",
+      "rice": "assets/img/rice.jpg",
+      "oat": "assets/img/rice.jpg",
+      "cereal": "assets/img/rice.jpg",
+      "bean": "assets/img/beans.jpg",
+      "canned": "assets/img/beans.jpg",
+      "soup": "assets/img/beans.jpg",
+      "pasta": "assets/img/pasta.jpg",
+      "spaghetti": "assets/img/pasta.jpg",
+      "macaroni": "assets/img/pasta.jpg",
+      "noodle": "assets/img/pasta.jpg",
+    };
     const categoryImages = {
       "Dairy": "assets/img/milk.jpg",
       "Bakery": "assets/img/bread.jpg",
@@ -120,7 +144,11 @@
       "Canned Goods": "assets/img/beans.jpg",
       "Pasta": "assets/img/pasta.jpg",
     };
-    function getImage(cat) {
+    function getImage(name, cat) {
+      const lower = name.toLowerCase();
+      for (const [keyword, img] of Object.entries(nameImages)) {
+        if (lower.includes(keyword)) return img;
+      }
       return categoryImages[cat] || "assets/img/foodbank.jpg";
     }
     function daysUntil(dateStr) {
@@ -135,7 +163,7 @@
       return `
         <div class="col-md-4">
           <div class="my-item-card">
-            <div class="my-item-image"><img src="${getImage(item.category)}" alt="${item.name}"></div>
+            <div class="my-item-image"><img src="${getImage(item.name, item.category)}" alt="${item.name}"></div>
             <div class="my-item-content">
               <h5>${item.name}</h5>
               <p class="my-item-text">Quantity: ${item.quantity} ${item.unit}</p>
