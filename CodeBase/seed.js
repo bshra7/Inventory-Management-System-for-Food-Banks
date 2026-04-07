@@ -3,7 +3,7 @@ const bcrypt = require("bcryptjs");
 const User = require("./models/User");
 const Item = require("./models/Item");
 
-const MONGO_URI = "mongodb://127.0.0.1:27017/pantriHub";
+const MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/pantriHub";
 
 // helper to get a date X days from now
 function daysFromNow(days) {
