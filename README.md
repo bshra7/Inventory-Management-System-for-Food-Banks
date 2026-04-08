@@ -35,12 +35,14 @@ To run the app:
    ```
 6- go to localhost3000 and login with demo@pantrihub.com with password: demo123
 
-For a quick access to deployment app visit: <a href= "https://pantrihub.onrender.com/signin.html"></a>. sign in with the following credentials:
-Usernames:
+For a quick access to deployment app visit: https://pantrihub.onrender.com/signin.html. Sign in with the following credentials: 
+<br>
+<h3> Usernames: </h3>
  - Regina: regina@pantrihub.com
  - Moose Jaw: moosejaw@pantrihub.com
  - Saskatoon: saskatoon@pantrihub.com
-Password:
+ <br>
+<h3> Password:</h3>
  - for all accounts use: demo123
 
 # <h1> **Authors:** </h1>
