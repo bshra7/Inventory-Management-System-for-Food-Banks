@@ -38,9 +38,9 @@ To run the app:
 For a quick access to deployment app visit: https://pantrihub.onrender.com/signin.html. Sign in with the following credentials: 
 <br>
 <h3> Usernames: </h3>
- - Regina: regina@pantrihub.com
- - Moose Jaw: moosejaw@pantrihub.com
- - Saskatoon: saskatoon@pantrihub.com
+- Regina: regina@pantrihub.com
+- Moose Jaw: moosejaw@pantrihub.com
+- Saskatoon: saskatoon@pantrihub.com
  <br>
 <h3> Password:</h3>
  - for all accounts use: demo123
