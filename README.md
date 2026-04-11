@@ -43,6 +43,9 @@ For a quick access to deployment app visit: https://pantrihub.onrender.com/signi
 # <h4> Password: </h3>
 - for all accounts use: demo123
 
+# <h3> **Project Commercial:**</h3>
+Youtube link: https://www.youtube.com/watch?v=tShocyUzElU
+
 # <h1> **Authors:** </h1>
 <a href="https://github.com/ShivStrider">Shivam Jigneshbhai Soni</a>
 <br />
