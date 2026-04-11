@@ -14,6 +14,38 @@ thus undermining the purpose of a food bank despite the availability of sufficie
 - To ensure that food banks across the province can share their surplus with neighbouring food banks using an inventory management system to track surplus in goods
 - Improve inter bank communication, by centralizing communication in one consice platform, insread of the traditional ways such as emials, phone calls, etc which usually casue miscommunication and long delays
 
+# <h1> **Project Deployment:** </h1>
+To run the app:
+1. Run MongoDb
+2. Run:
+   ```
+   cd CodeBase
+   ```
+3. Install Dependencies:
+   ```
+   npm install
+   ```
+4. Seed the database:
+   ```
+   npm run seed
+   ```
+5. Start the app:
+   ```
+   npm start
+   ```
+6. Go to localhost3000 and login with demo@pantrihub.com and password: demo123
+
+For a quick access to deployment app visit: https://pantrihub.onrender.com/signin.html. Sign in with the following credentials:
+# <h4> Usernames: </h3>
+- Regina: regina@pantrihub.com
+- Moose Jaw: moosejaw@pantrihub.com
+- Saskatoon: saskatoon@pantrihub.com
+# <h4> Password: </h3>
+- for all accounts use: demo123
+
+# <h3> **Project Commercial:**</h3>
+Youtube link: https://www.youtube.com/watch?v=tShocyUzElU
+
 # <h1> **Authors:** </h1>
 <a href="https://github.com/ShivStrider">Shivam Jigneshbhai Soni</a>
 <br />

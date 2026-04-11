@@ -61,6 +61,25 @@
           <li><a class="dropdown-item" href="#" data-status="Low Stock">Low Stock</a></li>
         </ul>
       </div>
+
+      <div class="btn-group" id="location-dropdown">
+        <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown">Location</button>
+        <ul class="dropdown-menu" id="location-menu">
+          <li><a class="dropdown-item" href="#" data-org="">All Locations</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="filter-row justify-content-center mt-2">
+      <div class="d-flex align-items-center gap-2">
+        <label class="mb-0" style="color:#006b2d; white-space:nowrap;">Expiry From:</label>
+        <input type="date" class="form-control form-control-sm" id="expiry-from" style="max-width:160px;">
+      </div>
+      <div class="d-flex align-items-center gap-2">
+        <label class="mb-0" style="color:#006b2d; white-space:nowrap;">Expiry To:</label>
+        <input type="date" class="form-control form-control-sm" id="expiry-to" style="max-width:160px;">
+      </div>
+      <button class="btn btn-outline-light btn-sm" id="clear-dates-btn">Clear Dates</button>
     </div>
 
     <div class="list-group" id="items-list"></div>
@@ -70,14 +89,20 @@
   <script>
     let currentCategory = "";
     let currentStatus = "";
+    let currentOrg = "";
     let searchTimeout = null;
 
     async function searchItems() {
       const q = document.getElementById("search-input").value.trim();
+      const expiryFrom = document.getElementById("expiry-from").value;
+      const expiryTo = document.getElementById("expiry-to").value;
       const params = new URLSearchParams();
       if (q) params.set("q", q);
       if (currentCategory) params.set("category", currentCategory);
       if (currentStatus) params.set("status", currentStatus);
+      if (currentOrg) params.set("organization", currentOrg);
+      if (expiryFrom) params.set("expiryFrom", expiryFrom);
+      if (expiryTo) params.set("expiryTo", expiryTo);
 
       try {
         const res = await fetch("/api/items/search?" + params.toString());
@@ -142,6 +167,33 @@
           document.querySelector("#status-dropdown > button").textContent = currentStatus || "Status";
           searchItems();
         });
+      });
+
+      // Location filter
+      fetch("/api/items/organizations").then(r => r.json()).then(orgs => {
+        const menu = document.getElementById("location-menu");
+        orgs.forEach(org => {
+          const li = document.createElement("li");
+          li.innerHTML = `<a class="dropdown-item" href="#" data-org="${org}">${org}</a>`;
+          menu.appendChild(li);
+        });
+        document.querySelectorAll("#location-menu .dropdown-item").forEach(el => {
+          el.addEventListener("click", (e) => {
+            e.preventDefault();
+            currentOrg = e.target.dataset.org;
+            document.querySelector("#location-dropdown > button").textContent = currentOrg || "Location";
+            searchItems();
+          });
+        });
+      });
+
+      // Expiry date range filter
+      document.getElementById("expiry-from").addEventListener("change", searchItems);
+      document.getElementById("expiry-to").addEventListener("change", searchItems);
+      document.getElementById("clear-dates-btn").addEventListener("click", () => {
+        document.getElementById("expiry-from").value = "";
+        document.getElementById("expiry-to").value = "";
+        searchItems();
       });
 
       fetch("/api/auth/me").then(r=>r.json()).then(u=>{

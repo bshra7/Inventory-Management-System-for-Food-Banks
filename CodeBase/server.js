@@ -12,14 +12,14 @@ const dashboardRoutes = require("./routes/dashboardRoutes");
 
 const app = express();
 const PORT = 3000;
-const MONGO_URI = "mongodb://127.0.0.1:27017/pantriHub";
+const MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/pantriHub";
 
 // middleware setup
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   session({
-    secret: "pantriHub-secret-key",
+    secret: process.env.SESSION_SECRET || "pantriHub-secret-key",
     resave: false,
     saveUninitialized: false,
     store: MongoStore.create({ mongoUrl: MONGO_URI }),

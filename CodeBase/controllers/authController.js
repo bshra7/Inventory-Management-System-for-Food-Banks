@@ -4,7 +4,7 @@ const User = require("../models/User");
 // handles new user registration
 exports.register = async (req, res) => {
   try {
-    const { name, email, password, organization } = req.body;
+    const { name, email, password, organization, address } = req.body;
 
     if (!name || !email || !password) {
       return res.status(400).json({ error: "Name, email, and password are required" });
@@ -23,6 +23,7 @@ exports.register = async (req, res) => {
       email,
       password: hashed,
       organization: organization || "",
+      address: address || "",
     });
 
     // save user id in session so they stay logged in
@@ -67,6 +68,34 @@ exports.logout = (req, res) => {
   req.session.destroy(() => {
     res.json({ success: true });
   });
+};
+
+// resets a user's password by email
+exports.resetPassword = async (req, res) => {
+  try {
+    const { email, newPassword } = req.body;
+
+    if (!email || !newPassword) {
+      return res.status(400).json({ error: "Email and new password are required" });
+    }
+
+    if (newPassword.length < 6) {
+      return res.status(400).json({ error: "Password must be at least 6 characters" });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ error: "No account found with that email" });
+    }
+
+    user.password = await bcrypt.hash(newPassword, 10);
+    await user.save();
+
+    res.json({ success: true });
+  } catch (err) {
+    console.error("Reset password error:", err);
+    res.status(500).json({ error: "Password reset failed" });
+  }
 };
 
 // returns the currently logged in user's info
