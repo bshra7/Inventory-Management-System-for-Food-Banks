@@ -16,33 +16,31 @@ thus undermining the purpose of a food bank despite the availability of sufficie
 
 # <h1> **Project Deployment:** </h1>
 To run the app:
-1- make sure MongoDb is running
-2-
+1. Run MongoDb
+2. Run:
    ```
    cd CodeBase
    ```
-3-
-  ```
-  npm install
-  ```
-4- 
+3. Install Dependencies:
+   ```
+   npm install
+   ```
+4. Seed the database:
    ```
    npm run seed
    ```
-5- 
+5. Start the app:
    ```
    npm start
    ```
-6- go to localhost3000 and login with demo@pantrihub.com with password: demo123
+6. Go to localhost3000 and login with demo@pantrihub.com and password: demo123
 
-For a quick access to deployment app visit: https://pantrihub.onrender.com/signin.html. Sign in with the following credentials: 
-
-# <h3> Usernames: </h3>
+For a quick access to deployment app visit: https://pantrihub.onrender.com/signin.html. Sign in with the following credentials:
+# <h4> Usernames: </h3>
 - Regina: regina@pantrihub.com
 - Moose Jaw: moosejaw@pantrihub.com
 - Saskatoon: saskatoon@pantrihub.com
-
-# <h3> Password: </h3>
+# <h4> Password: </h3>
 - for all accounts use: demo123
 
 # <h1> **Authors:** </h1>
